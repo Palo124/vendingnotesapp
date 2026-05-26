@@ -722,7 +722,8 @@ body[data-theme="light"] .icon-action {
   font-size: 0.82rem;
 }
 
-.fetched-operator {
+.fetched-operator,
+.fetched-ico {
   border-color: rgba(79, 142, 247, 0.36);
   color: var(--text);
 }

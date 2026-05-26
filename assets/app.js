@@ -66,6 +66,7 @@
   const operatorNameOptions = document.getElementById("operatorNameOptions");
   const operatorIcoOptions = document.getElementById("operatorIcoOptions");
   const operatorNameChips = document.getElementById("operatorNameChips");
+  const operatorIcoChips = document.getElementById("operatorIcoChips");
   const qualityHint = document.getElementById("qualityHint");
   const potentialHint = document.getElementById("potentialHint");
   const steps = Array.from(document.querySelectorAll(".survey-step"));
@@ -440,6 +441,21 @@
     });
   }
 
+  function addOperatorIcoChips(values) {
+    operatorIcoChips.querySelectorAll(".fetched-ico").forEach(function (chip) {
+      chip.remove();
+    });
+
+    values.slice(0, 12).forEach(function (value) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chip chip-sm fetched-ico";
+      button.dataset.value = value;
+      button.textContent = value;
+      operatorIcoChips.appendChild(button);
+    });
+  }
+
   function uniqueSorted(values) {
     return Array.from(new Set(values
       .map(function (value) { return String(value || "").trim(); })
@@ -474,9 +490,12 @@
       }
 
       if (icoIndex !== -1) {
-        fillDatalist(operatorIcoOptions, uniqueSorted(rows.map(function (row) {
+        const operatorIcos = uniqueSorted(rows.map(function (row) {
           return row[icoIndex];
-        })));
+        }));
+
+        fillDatalist(operatorIcoOptions, operatorIcos);
+        addOperatorIcoChips(operatorIcos);
       }
     } catch (_err) {
       // Suggestions are optional; form submission must keep working without them.
@@ -629,6 +648,14 @@
     if (!chip) return;
 
     form.elements.operatorName.value = chip.dataset.value || "";
+    scheduleSave();
+  });
+
+  operatorIcoChips.addEventListener("click", function (event) {
+    const chip = event.target.closest(".fetched-ico");
+    if (!chip) return;
+
+    form.elements.operatorIco.value = chip.dataset.value || "";
     scheduleSave();
   });
 
