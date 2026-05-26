@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1419">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Vending Site Survey</title>
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <h1>Site Survey</h1>
+      <p class="subtitle">Vending machine location scouting</p>
+    </div>
+    <div class="draft-badge hidden" id="draftBadge">Draft saved</div>
+  </header>
+
+  <main class="container">
+    <form id="surveyForm" novalidate>
+      <section class="card">
+        <h2>Location</h2>
+
+        <label class="field">
+          <span class="label">Area / District</span>
+          <input type="text" name="areaDistrict" autocomplete="address-level2" placeholder="Prague 3, Karlín…" required>
+        </label>
+
+        <label class="field">
+          <span class="label">Address</span>
+          <input type="text" name="address" autocomplete="street-address" placeholder="Sokolovská 122" required>
+        </label>
+
+        <label class="field">
+          <span class="label">Building Name</span>
+          <input type="text" name="buildingName" placeholder="Office Center Alpha">
+        </label>
+
+        <fieldset class="field">
+          <legend class="label">Building Type</legend>
+          <div class="chip-grid" data-name="buildingType" data-required="true">
+            <button type="button" class="chip" data-value="office">office</button>
+            <button type="button" class="chip" data-value="warehouse">warehouse</button>
+            <button type="button" class="chip" data-value="clinic">clinic</button>
+            <button type="button" class="chip" data-value="school">school</button>
+            <button type="button" class="chip" data-value="dormitory">dormitory</button>
+            <button type="button" class="chip" data-value="gym">gym</button>
+            <button type="button" class="chip" data-value="coworking">coworking</button>
+            <button type="button" class="chip" data-value="factory">factory</button>
+            <button type="button" class="chip" data-value="public building">public building</button>
+            <button type="button" class="chip" data-value="transport hub">transport hub</button>
+            <button type="button" class="chip" data-value="retail">retail</button>
+            <button type="button" class="chip" data-value="mixed-use">mixed-use</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend class="label">Estimated People Count</legend>
+          <input type="text" name="peopleCount" inputmode="numeric" placeholder="120">
+          <div class="chip-row compact" data-name="peopleCountQuick">
+            <button type="button" class="chip chip-sm" data-value="30">30</button>
+            <button type="button" class="chip chip-sm" data-value="120">120</button>
+            <button type="button" class="chip chip-sm" data-value="300+">300+</button>
+            <button type="button" class="chip chip-sm" data-value="unknown">unknown</button>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="card">
+        <h2>Existing Machine</h2>
+
+        <fieldset class="field">
+          <legend class="label">Existing Machine?</legend>
+          <div class="chip-row" data-name="existingMachine" data-required="true">
+            <button type="button" class="chip chip-toggle" data-value="yes">yes</button>
+            <button type="button" class="chip chip-toggle" data-value="no">no</button>
+          </div>
+        </fieldset>
+
+        <div class="conditional hidden" id="existingMachineFields">
+          <label class="field">
+            <span class="label">Operator Name</span>
+            <input type="text" name="operatorName" placeholder="Delikomat, Coca-Cola…">
+            <div class="chip-row compact">
+              <button type="button" class="chip chip-sm preset" data-target="operatorName" data-value="unknown">unknown</button>
+              <button type="button" class="chip chip-sm preset" data-target="operatorName" data-value="none">none</button>
+            </div>
+          </label>
+
+          <fieldset class="field">
+            <legend class="label">Machine Quality (1–5)</legend>
+            <div class="score-row" data-name="machineQuality">
+              <button type="button" class="score-btn" data-value="1" title="terrible">1</button>
+              <button type="button" class="score-btn" data-value="2" title="weak">2</button>
+              <button type="button" class="score-btn" data-value="3" title="acceptable">3</button>
+              <button type="button" class="score-btn" data-value="4" title="good">4</button>
+              <button type="button" class="score-btn" data-value="5" title="excellent">5</button>
+            </div>
+            <p class="hint" id="qualityHint">Tap a score</p>
+          </fieldset>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2>Amenities & Access</h2>
+
+        <fieldset class="field">
+          <legend class="label">Card Payment?</legend>
+          <div class="chip-row" data-name="cardPayment" data-required="true">
+            <button type="button" class="chip chip-toggle" data-value="yes">yes</button>
+            <button type="button" class="chip chip-toggle" data-value="no">no</button>
+            <button type="button" class="chip chip-toggle" data-value="unknown">unknown</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend class="label">Coffee Available?</legend>
+          <div class="chip-row" data-name="coffeeAvailable" data-required="true">
+            <button type="button" class="chip chip-toggle" data-value="yes">yes</button>
+            <button type="button" class="chip chip-toggle" data-value="no">no</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend class="label">Nearby Food Distance</legend>
+          <div class="chip-grid" data-name="nearbyFood" data-required="true">
+            <button type="button" class="chip" data-value="inside building">inside building</button>
+            <button type="button" class="chip" data-value="1 min">1 min</button>
+            <button type="button" class="chip" data-value="3 min">3 min</button>
+            <button type="button" class="chip" data-value="5 min">5 min</button>
+            <button type="button" class="chip" data-value="10+ min">10+ min</button>
+            <button type="button" class="chip" data-value="isolated">isolated</button>
+          </div>
+        </fieldset>
+
+        <fieldset class="field">
+          <legend class="label">Access Difficulty</legend>
+          <div class="chip-row" data-name="accessDifficulty" data-required="true">
+            <button type="button" class="chip chip-level chip-low" data-value="low">low</button>
+            <button type="button" class="chip chip-level chip-med" data-value="medium">medium</button>
+            <button type="button" class="chip chip-level chip-high" data-value="high">high</button>
+          </div>
+        </fieldset>
+      </section>
+
+      <section class="card">
+        <h2>Assessment</h2>
+
+        <label class="field">
+          <span class="label">Notes</span>
+          <textarea name="notes" rows="3" placeholder="night shifts, security gate, heavy foot traffic…"></textarea>
+          <div class="chip-row compact wrap">
+            <button type="button" class="chip chip-sm note-tag" data-value="night shifts">night shifts</button>
+            <button type="button" class="chip chip-sm note-tag" data-value="machine empty">machine empty</button>
+            <button type="button" class="chip chip-sm note-tag" data-value="many students">many students</button>
+            <button type="button" class="chip chip-sm note-tag" data-value="security gate">security gate</button>
+            <button type="button" class="chip chip-sm note-tag" data-value="heavy foot traffic">heavy foot traffic</button>
+          </div>
+        </label>
+
+        <fieldset class="field">
+          <legend class="label">Potential Score (1–10)</legend>
+          <div class="score-row score-row-wide" data-name="potentialScore" data-required="true">
+            <button type="button" class="score-btn score-potential" data-value="1">1</button>
+            <button type="button" class="score-btn score-potential" data-value="2">2</button>
+            <button type="button" class="score-btn score-potential" data-value="3">3</button>
+            <button type="button" class="score-btn score-potential" data-value="4">4</button>
+            <button type="button" class="score-btn score-potential" data-value="5">5</button>
+            <button type="button" class="score-btn score-potential" data-value="6">6</button>
+            <button type="button" class="score-btn score-potential" data-value="7">7</button>
+            <button type="button" class="score-btn score-potential" data-value="8">8</button>
+            <button type="button" class="score-btn score-potential" data-value="9">9</button>
+            <button type="button" class="score-btn score-potential" data-value="10">10</button>
+          </div>
+          <p class="hint" id="potentialHint">1–3 bad · 4–6 maybe · 7–8 strong · 9–10 investigate now</p>
+        </fieldset>
+      </section>
+    </form>
+  </main>
+
+  <footer class="action-bar">
+    <div class="action-inner">
+      <button type="button" class="btn btn-ghost" id="copyRowBtn">Copy row</button>
+      <button type="submit" class="btn btn-primary" id="submitBtn" form="surveyForm">Submit</button>
+    </div>
+    <p class="status" id="statusMsg" aria-live="polite"></p>
+  </footer>
+
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>
