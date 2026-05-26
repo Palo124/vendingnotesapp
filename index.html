@@ -190,11 +190,16 @@
         <div class="conditional collapsed" id="existingMachineFields">
           <label class="field">
             <span class="label">Operator Name</span>
-            <input type="text" name="operatorName" placeholder="Delikomat, Coca-Cola...">
-            <div class="chip-row compact">
-              <button type="button" class="chip chip-sm preset" data-target="operatorName" data-value="unknown">unknown</button>
-              <button type="button" class="chip chip-sm preset" data-target="operatorName" data-value="none">none</button>
+            <input type="text" name="operatorName" list="operatorNameOptions" placeholder="Delikomat, Coca-Cola...">
+            <datalist id="operatorNameOptions"></datalist>
+            <div class="chip-row compact" id="operatorNameChips">
             </div>
+          </label>
+
+          <label class="field">
+            <span class="label">IČO</span>
+            <input type="text" name="operatorIco" list="operatorIcoOptions" inputmode="numeric" placeholder="12345678">
+            <datalist id="operatorIcoOptions"></datalist>
           </label>
 
           <fieldset class="field">

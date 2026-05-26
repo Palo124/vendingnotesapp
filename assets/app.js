@@ -16,6 +16,7 @@
     "accessDifficulty",
     "notes",
     "potentialScore",
+    "operatorIco",
   ];
 
   const SHEET_HEADERS = [
@@ -33,6 +34,7 @@
     "Access Difficulty",
     "Notes",
     "Potential Score (1-10)",
+    "Operator IČO",
   ];
 
   const DRAFT_KEY = "vending-survey-draft";
@@ -61,6 +63,9 @@
   const authStatus = document.getElementById("authStatus");
   const draftBadge = document.getElementById("draftBadge");
   const existingMachineFields = document.getElementById("existingMachineFields");
+  const operatorNameOptions = document.getElementById("operatorNameOptions");
+  const operatorIcoOptions = document.getElementById("operatorIcoOptions");
+  const operatorNameChips = document.getElementById("operatorNameChips");
   const qualityHint = document.getElementById("qualityHint");
   const potentialHint = document.getElementById("potentialHint");
   const steps = Array.from(document.querySelectorAll(".survey-step"));
@@ -199,6 +204,7 @@
 
     if (data.existingMachine !== "yes") {
       data.operatorName = "";
+      data.operatorIco = "";
       data.machineQuality = "";
     }
 
@@ -392,6 +398,7 @@
       appPassword = cachedPassword;
       setLocked(false);
       setStatus("Connected to Google Sheet", "success");
+      loadOperatorOptions();
       return true;
     } catch (_err) {
       clearCachedPassword();
@@ -407,6 +414,73 @@
 
     setLocked(true);
     authStatus.textContent = "";
+  }
+
+  function fillDatalist(datalist, values) {
+    datalist.textContent = "";
+    values.forEach(function (value) {
+      const option = document.createElement("option");
+      option.value = value;
+      datalist.appendChild(option);
+    });
+  }
+
+  function addOperatorNameChips(values) {
+    operatorNameChips.querySelectorAll(".fetched-operator").forEach(function (chip) {
+      chip.remove();
+    });
+
+    values.slice(0, 12).forEach(function (value) {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.className = "chip chip-sm fetched-operator";
+      button.dataset.value = value;
+      button.textContent = value;
+      operatorNameChips.appendChild(button);
+    });
+  }
+
+  function uniqueSorted(values) {
+    return Array.from(new Set(values
+      .map(function (value) { return String(value || "").trim(); })
+      .filter(Boolean)))
+      .sort(function (a, b) { return a.localeCompare(b); });
+  }
+
+  async function loadOperatorOptions() {
+    if (!configuredEndpoint() || !appPassword) return;
+
+    const url = new URL(endpointUrl());
+    url.searchParams.set("action", "rows");
+    url.searchParams.set("password", appPassword);
+
+    try {
+      const response = await fetch(url.toString(), { method: "GET" });
+      const payload = await response.json();
+      if (!payload.ok) return;
+
+      const headers = payload.headers || [];
+      const rows = payload.rows || [];
+      const operatorIndex = headers.indexOf("Operator Name");
+      const icoIndex = headers.indexOf("Operator IČO");
+
+      if (operatorIndex !== -1) {
+        const operatorNames = uniqueSorted(rows.map(function (row) {
+          return row[operatorIndex];
+        }));
+
+        fillDatalist(operatorNameOptions, operatorNames);
+        addOperatorNameChips(operatorNames);
+      }
+
+      if (icoIndex !== -1) {
+        fillDatalist(operatorIcoOptions, uniqueSorted(rows.map(function (row) {
+          return row[icoIndex];
+        })));
+      }
+    } catch (_err) {
+      // Suggestions are optional; form submission must keep working without them.
+    }
   }
 
   function fillGpsCoordinates() {
@@ -493,6 +567,7 @@
       showToast("Saved to Google Sheet");
       resetForm();
       clearDraft();
+      setTimeout(loadOperatorOptions, 1200);
     } catch (err) {
       setStatus("Submit failed", "error");
       showToast("Network error");
@@ -515,6 +590,7 @@
         if (value !== "yes") {
           setGroupValue("machineQuality", "");
           form.elements.operatorName.value = "";
+          form.elements.operatorIco.value = "";
         }
       }
 
@@ -546,6 +622,14 @@
         scheduleSave();
       }
     });
+  });
+
+  operatorNameChips.addEventListener("click", function (event) {
+    const chip = event.target.closest(".fetched-operator");
+    if (!chip) return;
+
+    form.elements.operatorName.value = chip.dataset.value || "";
+    scheduleSave();
   });
 
   document.querySelectorAll(".note-tag").forEach(function (btn) {
@@ -582,6 +666,7 @@
       authStatus.textContent = "";
       setLocked(false);
       setStatus("Connected to Google Sheet", "success");
+      loadOperatorOptions();
     } catch (err) {
       authStatus.textContent = "Password check failed";
     }

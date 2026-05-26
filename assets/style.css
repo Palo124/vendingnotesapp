@@ -429,6 +429,7 @@ body[data-theme="light"] .settings-button {
 
 .survey-step.active {
   display: block;
+  min-height: calc(100dvh - var(--safe-top) - var(--safe-bottom) - 245px);
   animation: stepIn 0.18s ease-out;
 }
 
@@ -719,6 +720,11 @@ body[data-theme="light"] .icon-action {
   min-height: 38px;
   padding: 8px 13px;
   font-size: 0.82rem;
+}
+
+.fetched-operator {
+  border-color: rgba(79, 142, 247, 0.36);
+  color: var(--text);
 }
 
 .chip:active { transform: scale(0.96); }
