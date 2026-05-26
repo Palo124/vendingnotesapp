@@ -64,6 +64,8 @@ body[data-theme="light"] {
 
 html {
   -webkit-text-size-adjust: 100%;
+  background: var(--bg);
+  overscroll-behavior-y: none;
   scroll-behavior: smooth;
 }
 
@@ -73,6 +75,8 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.5;
+  min-height: 100dvh;
+  overscroll-behavior-y: none;
   padding-bottom: calc(128px + var(--safe-bottom));
   -webkit-font-smoothing: antialiased;
 }
@@ -1032,6 +1036,16 @@ body[data-theme="light"] .score-potential.selected[data-value="10"] {
   contain: layout paint;
   transform: translate3d(0, 0, 0);
   will-change: transform;
+}
+
+.action-bar::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -80px;
+  height: 80px;
+  background: var(--action-bg);
 }
 
 .action-inner {
