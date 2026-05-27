@@ -34,7 +34,7 @@
 
       const themeMeta = document.querySelector('meta[name="theme-color"]');
       if (themeMeta) {
-        themeMeta.setAttribute("content", theme === "light" ? "#f4f7fb" : "#0c0f16");
+        themeMeta.setAttribute("content", theme === "light" ? "#f3f4f6" : "#141619");
       }
     } catch (_err) {
       document.body.dataset.theme = "dark";

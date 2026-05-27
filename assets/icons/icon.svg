@@ -1,23 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Vending survey icon">
-  <defs>
-    <linearGradient id="bg" x1="80" y1="48" x2="432" y2="464" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#2563eb"/>
-      <stop offset="1" stop-color="#7c3aed"/>
-    </linearGradient>
-    <linearGradient id="glass" x1="168" y1="116" x2="312" y2="336" gradientUnits="userSpaceOnUse">
-      <stop offset="0" stop-color="#dbeafe"/>
-      <stop offset="1" stop-color="#93c5fd"/>
-    </linearGradient>
-  </defs>
-  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
-  <rect x="142" y="84" width="228" height="344" rx="34" fill="#f8fafc"/>
-  <rect x="170" y="118" width="118" height="196" rx="18" fill="url(#glass)"/>
-  <rect x="306" y="118" width="36" height="118" rx="14" fill="#0f172a"/>
-  <circle cx="324" cy="268" r="17" fill="#2563eb"/>
-  <rect x="180" y="344" width="152" height="42" rx="16" fill="#0f172a"/>
-  <rect x="200" y="152" width="58" height="28" rx="10" fill="#2563eb"/>
-  <rect x="200" y="204" width="58" height="28" rx="10" fill="#7c3aed"/>
-  <rect x="200" y="256" width="58" height="28" rx="10" fill="#10b981"/>
-  <circle cx="194" cy="84" r="18" fill="#ffffff" opacity="0.18"/>
-  <circle cx="410" cy="132" r="26" fill="#ffffff" opacity="0.13"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Vending site survey">
+  <rect width="512" height="512" rx="48" fill="#141619"/>
+  <rect x="136" y="96" width="240" height="320" rx="16" fill="#22262d" stroke="#4a6fa5" stroke-width="10"/>
+  <rect x="168" y="128" width="104" height="176" rx="8" fill="#1a1d22" stroke="#3a4050" stroke-width="6"/>
+  <rect x="184" y="148" width="72" height="28" rx="4" fill="#4a6fa5" opacity="0.85"/>
+  <rect x="184" y="192" width="72" height="28" rx="4" fill="#4a6fa5" opacity="0.55"/>
+  <rect x="184" y="236" width="72" height="28" rx="4" fill="#4a6fa5" opacity="0.35"/>
+  <rect x="292" y="128" width="52" height="128" rx="8" fill="#1a1d22" stroke="#3a4050" stroke-width="6"/>
+  <rect x="308" y="272" width="20" height="20" rx="4" fill="#4a6fa5"/>
+  <rect x="168" y="328" width="176" height="56" rx="8" fill="#1a1d22" stroke="#3a4050" stroke-width="6"/>
+  <rect x="196" y="344" width="120" height="24" rx="4" fill="#4a6fa5"/>
+  <rect x="196" y="96" width="120" height="24" rx="6" fill="#4a6fa5"/>
 </svg>

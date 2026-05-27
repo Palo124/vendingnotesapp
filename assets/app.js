@@ -154,7 +154,7 @@
     requiredCheckToggle.checked = settings.requiredCheck;
     themeToggle.checked = settings.theme === "light";
 
-    const themeColor = settings.theme === "light" ? "#f4f7fb" : "#0c0f16";
+    const themeColor = settings.theme === "light" ? "#f3f4f6" : "#141619";
     const themeMeta = document.querySelector('meta[name="theme-color"]');
     if (themeMeta) {
       themeMeta.setAttribute("content", themeColor);
